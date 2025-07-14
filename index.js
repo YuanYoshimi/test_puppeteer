@@ -1,3 +1,9 @@
+const express = require('express');
+const puppeteer = require('puppeteer');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.get('/', async (req, res) => {
   try {
     console.log('[INFO] Received request to /');
@@ -20,4 +26,8 @@ app.get('/', async (req, res) => {
     console.error('[ERROR]', err);
     res.status(500).send('Error running Puppeteer: ' + err.message);
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
 });
