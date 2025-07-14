@@ -1,5 +1,6 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,8 +9,10 @@ app.get('/', async (req, res) => {
   try {
     console.log('[INFO] Received request to /');
     console.log('[INFO] Launching Puppeteer...');
+    const chromePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
+    console.log('[DEBUG] Chrome path:', chromePath, 'Exists:', fs.existsSync(chromePath));
     const browser = await puppeteer.launch({
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      executablePath: chromePath,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: true
     });

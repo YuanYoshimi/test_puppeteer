@@ -1,19 +1,18 @@
-# Use Puppeteer's official image (includes Chrome)
-FROM ghcr.io/puppeteer/puppeteer:latest
+FROM node:20-slim
 
-# Don’t re-download Chrome; it’s already in the image
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+# Install Chromium and dependencies
+RUN apt-get update && \
+    apt-get install -y chromium chromium-driver && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set workdir
 WORKDIR /usr/src/app
 
-# Copy and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy your code
 COPY . .
 
-# Start your app
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 CMD ["node", "index.js"]
