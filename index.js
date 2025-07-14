@@ -9,6 +9,7 @@ app.get('/', async (req, res) => {
     console.log('[INFO] Received request to /');
     console.log('[INFO] Launching Puppeteer...');
     const browser = await puppeteer.launch({
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: true
     });
