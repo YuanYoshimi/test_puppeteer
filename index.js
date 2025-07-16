@@ -9,7 +9,8 @@ app.get('/', async (req, res) => {
   try {
     console.log('[INFO] Received request to /');
     console.log('[INFO] Launching Puppeteer...');
-    const chromePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
+    // Use correct default path for Render/Puppeteer Docker image
+    const chromePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable';
     console.log('[DEBUG] Chrome path:', chromePath, 'Exists:', fs.existsSync(chromePath));
     const browser = await puppeteer.launch({
       executablePath: chromePath,

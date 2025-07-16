@@ -13,6 +13,6 @@ RUN npm ci
 
 COPY . .
 
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 CMD ["node", "index.js"]
